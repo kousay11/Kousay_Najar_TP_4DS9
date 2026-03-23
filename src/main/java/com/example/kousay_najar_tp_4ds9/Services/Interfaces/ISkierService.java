@@ -1,6 +1,7 @@
 package com.example.kousay_najar_tp_4ds9.Services.Interfaces;
 
 import com.example.kousay_najar_tp_4ds9.Entity.Skier;
+import com.example.kousay_najar_tp_4ds9.Entity.TypeSubscription;
 
 import java.util.List;
 
@@ -10,4 +11,9 @@ public interface ISkierService {
     void deleteSkier(Long id);
     Skier getSkier(Long id);
     List<Skier> getAllSkiers();
+
+    void assignSkierToPiste(Long numSkier, Long numPiste);
+    Skier addSkierAndAssignToCourse(Skier skier, Long numCourse);
+    List<Skier> retrieveSkiersBySubscriptionType(TypeSubscription type);
+
 }

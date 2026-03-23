@@ -1,9 +1,11 @@
 package com.example.kousay_najar_tp_4ds9.Repository;
 
+import com.example.kousay_najar_tp_4ds9.Entity.Course;
 import com.example.kousay_najar_tp_4ds9.Entity.Registration;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
 public interface RegistrationRepository extends JpaRepository<Registration, Long> {
+    long countByCourse(Course course);
 }

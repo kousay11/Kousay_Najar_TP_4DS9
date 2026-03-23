@@ -18,15 +18,15 @@ public class CourseController {
     };
     @PostMapping("/updateCourse")
     Course updateCours(@RequestBody Course course){
-        return courseService.addCourse(course);
+        return courseService.updateCourse(course);
     };
     @DeleteMapping("/deleteCourse/{id}")
     void deleteCourse(@PathVariable Long id){
         courseService.deleteCourse(id);
     }
-    @DeleteMapping("/getCourse/{id}")
-    void getCourse(@PathVariable Long id){
-        courseService.deleteCourse(id);
+    @GetMapping("/getCourse/{id}")
+    Course getCourse(@PathVariable Long id){
+        return courseService.getCourse(id);
     }
     @GetMapping("/getCourses/")
     List<Course> getCourse(){
