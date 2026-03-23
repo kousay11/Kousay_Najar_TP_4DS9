@@ -15,11 +15,11 @@ public class CourseController {
     @PostMapping("/addCourse")
     Course ajouterCours(@RequestBody Course course){
         return courseService.addCourse(course);
-    };
+    }
     @PostMapping("/updateCourse")
     Course updateCours(@RequestBody Course course){
         return courseService.updateCourse(course);
-    };
+    }
     @DeleteMapping("/deleteCourse/{id}")
     void deleteCourse(@PathVariable Long id){
         courseService.deleteCourse(id);
