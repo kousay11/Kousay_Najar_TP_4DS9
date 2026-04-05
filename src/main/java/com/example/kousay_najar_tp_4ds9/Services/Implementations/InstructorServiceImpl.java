@@ -12,6 +12,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -51,9 +52,11 @@ public class InstructorServiceImpl implements IInstructorService {
     public Instructor addInstructorAndAssignToCourse(Instructor instructor, Long numCourse) {
         Course course = courseRepository.findById(numCourse)
                 .orElseThrow(() -> new RuntimeException("Course not found"));
-
-        instructor.setCourses(Set.of(course));
-
+        //setCourses(Set.of(course)) ecrase les anciens cours
+        if (instructor.getCourses() == null) {
+            instructor.setCourses(new HashSet<>());
+        }
+        instructor.getCourses().add(course);
         return instructorRepository.save(instructor);
     }
 
@@ -73,6 +76,21 @@ public class InstructorServiceImpl implements IInstructorService {
         }
 
         return weeks;
+    }
+    
+     public Instructor addInstructorAndAssignToCourses(Instructor instructor, List<Long> numCourses) {
+        List<Course> courses = courseRepository.findAllById(numCourses);
+
+        if (courses.size() != numCourses.size()) {
+            throw new RuntimeException("One or more courses were not found");
+        }
+
+        if (instructor.getCourses() == null) {
+            instructor.setCourses(new HashSet<>());
+        }
+        instructor.getCourses().addAll(courses);
+
+        return instructorRepository.save(instructor);
     }
 
 }

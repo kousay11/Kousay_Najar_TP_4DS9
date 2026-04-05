@@ -49,6 +49,7 @@ public class RegistrationServiceImpl implements IRegistrationService {
 
     @Override
     public Registration addRegistrationAndAssignToSkier(Registration registration, Long numSkier) {
+        // .orElse(null)
         Skier skier = skierRepository.findById(numSkier)
                 .orElseThrow(() -> new RuntimeException("Skier not found"));
 
@@ -65,7 +66,7 @@ public class RegistrationServiceImpl implements IRegistrationService {
         Course course = courseRepository.findById(numCourse)
                 .orElseThrow(() -> new RuntimeException("Course not found"));
 
-        registration.setCourse(course);
+        registration.setCourse(course); // registration est la classe prioritaire
 
         return registrationRepository.save(registration);
     }

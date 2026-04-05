@@ -3,6 +3,7 @@ package com.example.kousay_najar_tp_4ds9.Entity;
 import jakarta.persistence.*;
 import lombok.*;
 import java.time.LocalDate;
+import java.util.HashSet;
 import java.util.Set;
 import java.io.Serializable;
 
@@ -17,5 +18,5 @@ public class Instructor implements Serializable {
         private LocalDate dateOfHire;
 
         @OneToMany(cascade = CascadeType.ALL) // Relation 1-* unidirectionnelle
-        private Set<Course> courses;
+        private Set<Course> courses = new HashSet<>();
 }

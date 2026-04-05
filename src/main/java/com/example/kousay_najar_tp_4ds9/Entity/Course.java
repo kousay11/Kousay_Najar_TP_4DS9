@@ -14,6 +14,7 @@ import java.io.Serializable;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@ToString
 public class Course implements Serializable {
 
     @Id
@@ -38,6 +39,7 @@ public class Course implements Serializable {
      * 'mappedBy = "course"' indique que le champ 'course' dans la classe Registration
      * est le propriétaire de la relation (celui qui contient la clé étrangère).
      */
+//    Mapped by added to the child ( one to many bi directionnel ) appliquable dans many to many tout les cas
     @OneToMany(mappedBy = "course")
     private Set<Registration> registrations;
 

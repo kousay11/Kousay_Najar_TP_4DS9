@@ -9,7 +9,9 @@ import com.example.kousay_najar_tp_4ds9.Services.Interfaces.ISkierService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Service
 @AllArgsConstructor
@@ -50,15 +52,46 @@ public class SkierServiceImpl implements ISkierService {
     }
 
     @Override
-    public void assignSkierToPiste(Long numSkier, Long numPiste) {
-        Skier skier = skierRepository.findById(numSkier)
-                .orElseThrow(() -> new RuntimeException("Skier not found"));
+    public Skier assignSkierToPiste(Long numSkier, Long numPiste) {
+        Skier skier = skierRepository.findById(numSkier).get();
         Piste piste = pisteRepository.findById(numPiste)
                 .orElseThrow(() -> new RuntimeException("Piste not found"));
-        skier.getPistes().add(piste);
-        skierRepository.save(skier);
-    }
+        Set<Piste> pisteMiseAjour = skier.getPistes();
+        if(pisteMiseAjour == null)
+        {
+            pisteMiseAjour = new HashSet<>();
+        }
+        /*
+        try{
+           skier.getPistes().add(piste);}
+           catch(NullPointerException ex) si pas private Set<Piste> pistes = new HashSet<>(); dans skier
+          {
+             System.out.println("La liste des pistes du skier est null, création d'une nouvelle liste");
+             pisteMiseAjour = new HashSet<>();
+             pisteMiseAjour.add(piste);
+             skier.setPistes(pisteMiseAjour)
+           }
+         */
 
+        pisteMiseAjour.add(piste);
+        skier.setPistes(pisteMiseAjour);//skier.getPistes() = pisteMiseAjour;
+        // cas d'initialisation si private Set<Piste> pistes = new HashSet<>(); dans skier
+        //skier.getPistes().add(piste);
+
+       return  skierRepository.save(skier);
+    }
+    /** addSkierAndAssignToCourse(skier, numCourse)
+         ↓
+     1. Trouver le Course par numCourse
+         ↓
+     2. Sauvegarder Skier + Subscription (auto cascade)
+         ↓
+     3. Créer Registration + lier Skier + lier Course
+         ↓
+     4. Sauvegarder Registration
+         ↓
+     5. Retourner le Skier sauvegardé
+     */
     @Override
     public Skier addSkierAndAssignToCourse(Skier skier, Long numCourse) {
         Course course = courseRepository.findById(numCourse)

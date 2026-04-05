@@ -12,7 +12,7 @@ public interface ISkierService {
     Skier getSkier(Long id);
     List<Skier> getAllSkiers();
 
-    void assignSkierToPiste(Long numSkier, Long numPiste);
+    Skier assignSkierToPiste(Long numSkier, Long numPiste);
     Skier addSkierAndAssignToCourse(Skier skier, Long numCourse);
     List<Skier> retrieveSkiersBySubscriptionType(TypeSubscription type);
 
